@@ -11,7 +11,7 @@
     
     <style>
         :root {
-            /* Bold Saturated Color Palette from d79a67c6f8d849f054f894eb88a0f9d9.jpg */
+            /* Bold Saturated Color Palette */
             --color-mustard: #D19D14;
             --color-deep-brown: #501A0D;
             --color-soft-salmon: #F99B86;
@@ -46,6 +46,24 @@
             --radius-sharp: 0px;
             --radius-md: 16px;
             --radius-pill: 100px;
+
+            /* Dynamic Font Scale Multiplier */
+            --font-scale: 1.0;
+        }
+
+        body.high-contrast {
+            --color-bg: #FFFFFF !important;
+            --color-surface: #FFFFFF !important;
+            --color-sidebar-bg: #000000 !important;
+            --color-mustard: #FFFF00 !important;
+            --color-deep-brown: #000000 !important;
+            --color-soft-salmon: #FFFFFF !important;
+            --color-vibrant-orange: #0000FF !important; /* Extreme high contrast blue */
+            --color-lavender-pink: #FFFFFF !important;
+            --stroke-heavy: 5px solid #000000 !important;
+            --stroke-medium: 3px solid #000000 !important;
+            --color-text-dark: #000000 !important;
+            --color-text-light: #FFFFFF !important;
         }
 
         * {
@@ -58,10 +76,11 @@
             background-color: var(--color-bg);
             color: var(--color-text-dark);
             font-family: var(--font-body);
-            font-size: 16px;
+            font-size: calc(16px * var(--font-scale));
             line-height: 1.5;
             display: flex;
             min-height: 100vh;
+            transition: background-color 0.15s ease, color 0.15s ease;
         }
 
         .sidebar {
@@ -78,6 +97,7 @@
             justify-content: space-between;
             overflow-y: auto;
             z-index: 10;
+            transition: background-color 0.15s ease, border-color 0.15s ease;
         }
 
         .sidebar-brand {
@@ -94,7 +114,7 @@
         .sidebar-name {
             font-family: var(--font-display);
             font-weight: 800;
-            font-size: 28px;
+            font-size: calc(28px * var(--font-scale));
             line-height: 1.0;
             color: var(--color-deep-brown);
             text-transform: uppercase;
@@ -104,7 +124,7 @@
         .sidebar-title-main {
             font-family: var(--font-display);
             font-weight: 800;
-            font-size: 13px;
+            font-size: calc(13px * var(--font-scale));
             text-transform: uppercase;
             color: var(--color-deep-brown);
             background-color: var(--color-lavender-pink);
@@ -133,7 +153,7 @@
             text-decoration: none;
             font-weight: 700;
             font-family: var(--font-display);
-            font-size: 15px;
+            font-size: calc(15px * var(--font-scale));
             text-transform: uppercase;
             border-radius: var(--radius-md);
             border: 2px solid transparent;
@@ -149,7 +169,7 @@
         }
 
         .sidebar-footer {
-            font-size: 11px;
+            font-size: calc(11px * var(--font-scale));
             font-family: monospace;
             color: var(--color-deep-brown);
             line-height: 1.4;
@@ -159,6 +179,77 @@
             border-radius: var(--radius-md);
             box-shadow: 3px 3px 0px var(--color-deep-brown);
             margin-top: var(--space-4);
+        }
+
+        .sidebar-accessibility {
+            margin-top: var(--space-4);
+            background-color: var(--color-surface);
+            border: var(--stroke-medium);
+            padding: var(--space-3);
+            border-radius: var(--radius-md);
+            box-shadow: 3px 3px 0px var(--color-deep-brown);
+            transition: all 0.2s ease;
+        }
+
+        .accessibility-controls-row {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: var(--space-2);
+        }
+
+        .accessibility-desc {
+            max-height: 0;
+            opacity: 0;
+            overflow: hidden;
+            transition: max-height 0.3s ease, opacity 0.3s ease, margin-top 0.3s ease;
+            font-size: 11px;
+            line-height: 1.3;
+            margin-top: 0;
+            color: var(--color-deep-brown);
+        }
+
+        .sidebar-accessibility:hover .accessibility-desc {
+            max-height: 80px;
+            opacity: 0.8;
+            margin-top: var(--space-2);
+        }
+
+        .scale-control {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 6px;
+            margin-top: 0;
+        }
+
+        .scale-btn {
+            background-color: var(--color-surface);
+            border: var(--stroke-medium);
+            border-radius: 50%;
+            width: 28px;
+            height: 28px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-family: var(--font-display);
+            font-weight: 800;
+            font-size: 16px;
+            color: var(--color-deep-brown);
+            cursor: pointer;
+            box-shadow: 2px 2px 0px var(--color-deep-brown);
+            transition: all 0.1s ease;
+        }
+
+        .scale-btn:hover {
+            background-color: var(--color-lavender-pink);
+            transform: translate(-1px, -1px);
+            box-shadow: 3px 3px 0px var(--color-deep-brown);
+        }
+
+        .scale-btn:active {
+            transform: translate(1px, 1px);
+            box-shadow: 1px 1px 0px var(--color-deep-brown);
         }
 
         .main-content {
@@ -177,6 +268,7 @@
             box-shadow: 10px 10px 0px var(--color-deep-brown);
             position: relative;
             overflow: hidden;
+            transition: all 0.15s ease;
         }
 
         /* Hero Header Customization */
@@ -189,7 +281,7 @@
         .hero-card h1 {
             color: var(--color-text-light);
             font-family: var(--font-display);
-            font-size: 72px;
+            font-size: calc(72px * var(--font-scale));
             font-weight: 800;
             line-height: 0.95;
             letter-spacing: -3px;
@@ -207,27 +299,40 @@
         }
 
         .hero-card p {
-            font-size: 22px;
+            font-size: calc(22px * var(--font-scale));
             line-height: 1.4;
             max-width: 780px;
             font-weight: 500;
         }
 
-        /* Section Typography */
-        h2 {
+        .section-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: var(--space-2);
+            margin-bottom: var(--space-4);
+            border-bottom: 3px solid var(--color-deep-brown);
+            padding-bottom: var(--space-2);
+        }
+
+        /* Override standard headings inside section-headers */
+        .card h2 {
+            margin-bottom: 0;
+            border: none;
+            padding-bottom: 0;
             font-family: var(--font-display);
-            font-size: 42px;
+            font-size: calc(42px * var(--font-scale));
             font-weight: 800;
             text-transform: uppercase;
             letter-spacing: -1.5px;
-            margin-bottom: var(--space-4);
             display: flex;
             align-items: center;
             gap: var(--space-2);
             color: var(--color-deep-brown);
         }
 
-        h2::before {
+        .card h2::before {
             content: '';
             display: inline-block;
             width: 18px;
@@ -239,7 +344,7 @@
 
         h3 {
             font-family: var(--font-display);
-            font-size: 26px;
+            font-size: calc(26px * var(--font-scale));
             text-transform: uppercase;
             margin-top: var(--space-4);
             margin-bottom: var(--space-2);
@@ -248,7 +353,7 @@
 
         p {
             margin-bottom: var(--space-3);
-            font-size: 17px;
+            font-size: calc(17px * var(--font-scale));
             max-width: 780px;
         }
 
@@ -258,11 +363,10 @@
             border: 1px solid var(--color-deep-brown);
             padding: 2px 6px;
             border-radius: 6px;
-            font-size: 14px;
+            font-size: calc(14px * var(--font-scale));
             font-weight: bold;
         }
 
-        /* Massive Typography Specimen Card Styles */
         .specimen-box {
             border: var(--stroke-medium);
             background: var(--color-surface);
@@ -290,7 +394,7 @@
             font-family: var(--font-display);
             font-weight: 800;
             text-transform: uppercase;
-            font-size: 12px;
+            font-size: calc(12px * var(--font-scale));
             letter-spacing: 1px;
             color: var(--color-vibrant-orange);
         }
@@ -302,7 +406,7 @@
             border: var(--stroke-medium);
             border-radius: 8px;
             background: var(--color-surface);
-            font-size: 14px;
+            font-size: calc(14px * var(--font-scale));
             font-weight: bold;
             color: var(--color-deep-brown);
         }
@@ -367,7 +471,7 @@
             font-family: var(--font-display);
             font-weight: 800;
             text-transform: uppercase;
-            font-size: 12px;
+            font-size: calc(12px * var(--font-scale));
             color: var(--color-deep-brown);
             cursor: pointer;
             transition: all 0.1s ease;
@@ -379,7 +483,7 @@
             box-shadow: 2px 2px 0px var(--color-deep-brown);
         }
 
-        /* Layout Grid and recreation styles */
+        /* Responsive, full-span palette layout mimicking the original composition details */
         .palette-recreation {
             background-color: var(--color-surface);
             border: var(--stroke-medium);
@@ -387,8 +491,9 @@
             padding: var(--space-4);
             display: flex;
             flex-direction: column;
-            gap: var(--space-3);
-            max-width: 480px;
+            gap: var(--space-4);
+            width: 100%;
+            max-width: 100%;
             margin: var(--space-4) 0;
         }
 
@@ -396,28 +501,37 @@
             display: flex;
             align-items: center;
             gap: var(--space-3);
+            transition: transform 0.15s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            width: 100%;
+        }
+
+        .palette-row:hover {
+            transform: translate(-3px, -3px) scale(1.005) rotate(0deg) !important;
         }
 
         .circle-accent {
-            width: 70px;
-            height: 70px;
+            width: clamp(50px, 8vw, 75px);
+            height: clamp(50px, 8vw, 75px);
             border-radius: 50%;
             border: var(--stroke-medium);
             flex-shrink: 0;
+            box-shadow: 2px 2px 0px var(--color-deep-brown);
         }
 
         .pill-accent {
             flex-grow: 1;
-            height: 70px;
+            height: clamp(50px, 8vw, 75px);
             border-radius: var(--radius-pill);
             border: var(--stroke-medium);
             display: flex;
             align-items: center;
-            justify-content: flex-end;
-            padding-right: var(--space-4);
+            justify-content: center;
             font-family: monospace;
-            font-weight: bold;
-            font-size: 14px;
+            font-weight: 800;
+            font-size: calc(clamp(11px, 1.5vw, 15px) * var(--font-scale));
+            box-shadow: 2px 2px 0px var(--color-deep-brown);
+            text-transform: uppercase;
+            padding: 0 var(--space-3);
         }
 
         /* Tables and components */
@@ -443,7 +557,7 @@
             font-family: var(--font-display);
             text-transform: uppercase;
             font-weight: 800;
-            font-size: 15px;
+            font-size: calc(15px * var(--font-scale));
         }
 
         .live-canvas {
@@ -474,7 +588,7 @@
             padding: var(--space-2) var(--space-4);
             font-family: var(--font-display);
             font-weight: 800;
-            font-size: 13px;
+            font-size: calc(13px * var(--font-scale));
             text-transform: uppercase;
             color: var(--color-deep-brown);
             border-radius: var(--radius-pill);
@@ -527,7 +641,7 @@
             border-radius: var(--radius-pill);
             font-family: var(--font-display);
             font-weight: 800;
-            font-size: 11px;
+            font-size: calc(11px * var(--font-scale));
             text-transform: uppercase;
             color: var(--color-deep-brown);
         }
@@ -563,7 +677,7 @@
             text-align: left;
             font-family: var(--font-display);
             font-weight: 800;
-            font-size: 15px;
+            font-size: calc(15px * var(--font-scale));
             text-transform: uppercase;
             color: var(--color-deep-brown);
             display: flex;
@@ -586,7 +700,7 @@
 
         .accordion-panel-content {
             padding: var(--space-4);
-            font-size: 14px;
+            font-size: calc(14px * var(--font-scale));
             border-top: 2px dashed var(--color-deep-brown);
             color: var(--color-deep-brown);
         }
@@ -630,7 +744,7 @@
             border-radius: var(--radius-pill);
             font-family: var(--font-display);
             font-weight: 800;
-            font-size: 16px;
+            font-size: calc(16px * var(--font-scale));
             text-transform: uppercase;
             color: var(--color-deep-brown);
             cursor: pointer;
@@ -644,86 +758,104 @@
             background-color: var(--color-lavender-pink);
         }
 
-        /* High Energy Callouts */
-    .loud-quote {
-        border: var(--stroke-heavy);
-        background-color: var(--color-lavender-pink);
-        padding: var(--space-4);
-        border-radius: var(--radius-md);
-        font-family: var(--font-display);
-        font-size: 24px;
-        font-weight: 800;
-        line-height: 1.3;
-        color: var(--color-deep-brown);
-        margin: var(--space-4) 0;
-        position: relative;
-    }
-
-    .loud-quote::after {
-        content: "✦";
-        position: absolute;
-        top: 10px;
-        right: 15px;
-        font-size: 24px;
-        color: var(--color-vibrant-orange);
-    }
-
-    .tone-grid {
-        display: grid;
-        grid-template-columns: 1fr;
-        gap: var(--space-4);
-        margin-top: var(--space-4);
-    }
-    @media (min-width: 768px) {
-        .tone-grid {
-            grid-template-columns: repeat(2, 1fr);
+        .loud-quote {
+            border: var(--stroke-heavy);
+            background-color: var(--color-lavender-pink);
+            padding: var(--space-4);
+            border-radius: var(--radius-md);
+            font-family: var(--font-display);
+            font-size: calc(24px * var(--font-scale));
+            font-weight: 800;
+            line-height: 1.3;
+            color: var(--color-deep-brown);
+            margin: var(--space-4) 0;
+            position: relative;
         }
-    }
-    .tone-card {
-        border: var(--stroke-medium);
-        border-radius: var(--radius-md);
-        padding: var(--space-4);
-        background: var(--color-surface);
-        transition: transform 0.15s ease, box-shadow 0.15s ease;
-    }
-    .tone-card:hover {
-        transform: translate(-4px, -4px);
-        box-shadow: 4px 4px 0px var(--color-deep-brown);
-    }
-    .tone-badge {
-        display: inline-block;
-        padding: 4px 10px;
-        border-radius: var(--radius-pill);
-        font-family: var(--font-display);
-        font-weight: 800;
-        font-size: 11px;
-        text-transform: uppercase;
-        border: 2px solid var(--color-deep-brown);
-        margin-bottom: var(--space-3);
-    }
-    .rhetoric-list {
-        list-style: none;
-        display: flex;
-        flex-direction: column;
-        gap: var(--space-3);
-        margin-top: var(--space-2);
-    }
-    .rhetoric-item {
-        border-left: 4px solid var(--color-vibrant-orange);
-        padding-left: var(--space-3);
-    }
-    .rhetoric-tag {
-        font-family: var(--font-display);
-        font-weight: 800;
-        font-size: 13px;
-        text-transform: uppercase;
-        color: var(--color-vibrant-orange);
-    }
-</style>
+
+        .loud-quote::after {
+            content: "✦";
+            position: absolute;
+            top: 10px;
+            right: 15px;
+            font-size: 24px;
+            color: var(--color-vibrant-orange);
+        }
+
+        .tone-grid {
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: var(--space-4);
+            margin-top: var(--space-4);
+        }
+        @media (min-width: 768px) {
+            .tone-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+        }
+        .tone-card {
+            border: var(--stroke-medium);
+            border-radius: var(--radius-md);
+            padding: var(--space-4);
+            background: var(--color-surface);
+            transition: transform 0.15s ease, box-shadow 0.15s ease;
+        }
+        .tone-card:hover {
+            transform: translate(-4px, -4px);
+            box-shadow: 4px 4px 0px var(--color-deep-brown);
+        }
+        .tone-badge {
+            display: inline-block;
+            padding: 4px 10px;
+            border-radius: var(--radius-pill);
+            font-family: var(--font-display);
+            font-weight: 800;
+            font-size: calc(11px * var(--font-scale));
+            text-transform: uppercase;
+            border: 2px solid var(--color-deep-brown);
+            margin-bottom: var(--space-3);
+        }
+        .rhetoric-list {
+            list-style: none;
+            display: flex;
+            flex-direction: column;
+            gap: var(--space-3);
+            margin-top: var(--space-2);
+        }
+        .rhetoric-item {
+            border-left: 4px solid var(--color-vibrant-orange);
+            padding-left: var(--space-3);
+        }
+        .rhetoric-tag {
+            font-family: var(--font-display);
+            font-weight: 800;
+            font-size: calc(13px * var(--font-scale));
+            text-transform: uppercase;
+            color: var(--color-vibrant-orange);
+        }
+
+        /* Responsiveness for Sidebar on mobile viewports */
+        @media (max-width: 768px) {
+            body {
+                flex-direction: column;
+            }
+            .sidebar {
+                width: 100%;
+                height: auto;
+                position: relative;
+                border-right: none;
+                border-bottom: var(--stroke-heavy);
+                padding: var(--space-3);
+            }
+            .main-content {
+                margin-left: 0;
+                width: 100%;
+                padding: var(--space-4) var(--space-3);
+            }
+        }
+    </style>
 </head>
 <body>
 
-    <!-- Brutalist Sidebar -->
     <nav class="sidebar">
         <div>
             <div class="sidebar-brand">
@@ -739,18 +871,35 @@
                 <li class="sidebar-item"><a href="#tone" class="sidebar-link">06. Voice & Tone</a></li>
             </ul>
         </div>
-        <div class="sidebar-footer">
-            Personal Style Spec v3.0 <br>
-            Fonts: Bricolage & Degular
+        
+        <div>
+            <div class="sidebar-accessibility">
+                <div class="accessibility-controls-row">
+                    <button class="action-node" onclick="toggleContrast()" style="font-size: 11px; padding: 6px 10px; margin: 0; box-shadow: 2px 2px 0px var(--color-deep-brown); flex-shrink: 0;">🌓 Contrast</button>
+                    <div class="scale-control">
+                        <button class="scale-btn" onclick="adjustFontScale(-0.05)">−</button>
+                        <button class="action-node scale-display" onclick="resetFontScale()" title="Click to reset scale" style="padding: 4px 8px; font-size: 11px; margin: 0; box-shadow: 2px 2px 0px var(--color-deep-brown); text-align: center; width: 48px;">100%</button>
+                        <button class="scale-btn" onclick="adjustFontScale(0.05)">+</button>
+                    </div>
+                </div>
+                
+                <div class="accessibility-desc">
+                    Adjust contrast properties and typographic scales on the fly. Hover to reveal description details.
+                </div>
+            </div>
+
+            <div class="sidebar-footer">
+                Personal Style Spec v3.0 <br>
+                Fonts: Bricolage & Degular
+            </div>
         </div>
     </nav>
 
-    <!-- Main Dynamic Workspace -->
     <main class="main-content">
 
         <!-- Hero Card -->
         <header class="card hero-card" id="identity">
-            <h1>UX Engineer <span>& Leader</span></h1>
+            <h1 style="margin-bottom: var(--space-3);">UX Engineer <span>& Leader</span></h1>
             <p>
                 I bridge the high-fidelity space of visual expression with the absolute logic of production-ready code. As an aspiring UX Engineer and technical design leader, my background merges human-computer interaction with robust front-end architectures. 
             </p>
@@ -827,7 +976,7 @@
                     </tr>
                     <tr>
                         <td><strong>Labels & Metadata</strong></td>
-                        <td>Degular / Mono fallback</td>
+                        <td>Degular / Plus Jakarta Sans fallback</td>
                         <td>12px - 14px / Medium (500)</td>
                         <td>Micro-copy, technical structural grids, metrics tables.</td>
                     </tr>
@@ -842,24 +991,30 @@
                 A bold, highly saturated color palette engineered for deep structural hierarchy and rich visual pacing. By avoiding sterile, clinical grays, we cultivate a digital canvas that is both structurally disciplined and visually expressive.
             </p>
 
+            <!-- Custom Recreation block mapping the colors from the workspace palette responsively -->
             <div class="palette-recreation">
-                <div class="palette-row">
+                <!-- Group 1: Circle Left, Pill Right -->
+                <div class="palette-row" style="transform: rotate(-0.5deg);">
                     <div class="circle-accent" style="background-color: var(--color-mustard);"></div>
                     <div class="pill-accent" style="background-color: var(--color-mustard); color: var(--color-deep-brown);">#D19D14</div>
                 </div>
-                <div class="palette-row">
+                <!-- Group 2: Pill Left, Circle Right -->
+                <div class="palette-row" style="transform: rotate(0.4deg);">
                     <div class="pill-accent" style="background-color: var(--color-deep-brown); color: var(--color-lavender-pink);">#501A0D</div>
                     <div class="circle-accent" style="background-color: var(--color-deep-brown);"></div>
                 </div>
-                <div class="palette-row">
+                <!-- Group 3: Circle Left, Pill Right -->
+                <div class="palette-row" style="transform: rotate(-0.3deg);">
                     <div class="circle-accent" style="background-color: var(--color-soft-salmon);"></div>
                     <div class="pill-accent" style="background-color: var(--color-soft-salmon); color: var(--color-deep-brown);">#F99B86</div>
                 </div>
-                <div class="palette-row">
+                <!-- Group 4: Pill Left, Circle Right -->
+                <div class="palette-row" style="transform: rotate(0.3deg);">
                     <div class="pill-accent" style="background-color: var(--color-vibrant-orange); color: var(--color-text-light);">#F95417</div>
                     <div class="circle-accent" style="background-color: var(--color-vibrant-orange);"></div>
                 </div>
-                <div class="palette-row">
+                <!-- Group 5: Circle Left, Pill Right -->
+                <div class="palette-row" style="transform: rotate(-0.4deg);">
                     <div class="circle-accent" style="background-color: var(--color-lavender-pink);"></div>
                     <div class="pill-accent" style="background-color: var(--color-lavender-pink); color: var(--color-deep-brown);">#FBCBFA</div>
                 </div>
@@ -1158,7 +1313,38 @@
 
     <script>
         let currentFamily = 'bricolage';
+        let fontScale = 1.0;
 
+        function toggleContrast() {
+            document.body.classList.toggle('high-contrast');
+            const isHigh = document.body.classList.contains('high-contrast');
+            spawnToast(
+                "Contrast Adjusted", 
+                isHigh ? "High-contrast access override active." : "Standard system theme restored."
+            );
+        }
+
+        function updateFontScaleUI() {
+            document.documentElement.style.setProperty('--font-scale', fontScale);
+            const displayBtn = document.querySelector('.scale-display');
+            if (displayBtn) {
+                displayBtn.innerText = Math.round(fontScale * 100) + '%';
+            }
+        }
+
+        function adjustFontScale(delta) {
+            fontScale = Math.min(Math.max(fontScale + delta, 0.7), 2.0); // Restrict between 70% and 200%
+            updateFontScaleUI();
+            spawnToast("Scale Adjusted", `Global scale set to ${Math.round(fontScale * 100)}%.`);
+        }
+
+        function resetFontScale() {
+            fontScale = 1.0;
+            updateFontScaleUI();
+            spawnToast("Scale Reset", "Global scale reset to 100%.");
+        }
+
+        // Type specimen controls
         function setFamily(family) {
             currentFamily = family;
             const target = document.getElementById('specimen-target');
@@ -1176,23 +1362,7 @@
             }
         }
 
-        function updateText() {
-            const input = document.getElementById('type-test-input').value;
-            document.getElementById('specimen-target').innerText = input || ' ';
-        }
-
-        function updateSize() {
-            const val = document.getElementById('size-slider').value;
-            document.getElementById('size-indicator').innerText = val + 'px';
-            document.getElementById('specimen-target').style.fontSize = val + 'px';
-        }
-
-        function updateWeight() {
-            const val = document.getElementById('weight-slider').value;
-            document.getElementById('weight-indicator').innerText = val;
-            document.getElementById('specimen-target').style.fontWeight = val;
-        }
-
+        // Segmented controller logic
         function switchSegment(btn, env) {
             const control = btn.parentElement;
             control.querySelectorAll('.segment-btn').forEach(b => b.classList.remove('active'));
@@ -1200,6 +1370,7 @@
             document.getElementById('segment-feedback').innerText = "Active Environment: " + env.toUpperCase();
         }
 
+        // Accordion component expand/collapse logic
         function toggleAccordion(btn) {
             const icon = btn.querySelector('.icon');
             const panel = btn.nextElementSibling;
@@ -1213,7 +1384,19 @@
             }
         }
 
-        function spawnToast() {
+        function updateText() {
+            const input = document.getElementById('type-test-input').value;
+            document.getElementById('specimen-target').innerText = input || ' ';
+        }
+
+        function updateSize() {
+            const val = document.getElementById('size-slider').value;
+            document.getElementById('size-indicator').innerText = val + 'px';
+            document.getElementById('specimen-target').style.fontSize = val + 'px';
+        }
+
+        // Toast dispatcher mechanism
+        function spawnToast(title = "Event Triggered", body = "System dispatch successful.") {
             let container = document.getElementById('toast-container');
             if (!container) {
                 container = document.createElement('div');
@@ -1226,8 +1409,8 @@
             toast.innerHTML = `
                 <span style="font-size: 20px;">⚡</span>
                 <div>
-                    <strong style="font-family: var(--font-display); font-size: 12px; text-transform: uppercase; display: block; color: var(--color-deep-brown);">Event Triggered</strong>
-                    <span style="font-size: 12px; color: var(--color-deep-brown);">System dispatch successful.</span>
+                    <strong style="font-family: var(--font-display); font-size: 12px; text-transform: uppercase; display: block; color: var(--color-text-dark);">${title}</strong>
+                    <span style="font-size: 12px; color: var(--color-text-dark);">${body}</span>
                 </div>
             `;
             container.appendChild(toast);
@@ -1238,7 +1421,13 @@
                 setTimeout(() => {
                     toast.remove();
                 }, 200);
-            }, 3000);
+            }, 3500);
+        }
+
+        function updateWeight() {
+            const val = document.getElementById('weight-slider').value;
+            document.getElementById('weight-indicator').innerText = val;
+            document.getElementById('specimen-target').style.fontWeight = val;
         }
     </script>
 </body>
